@@ -1,0 +1,207 @@
+
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
+        Dim dynamicPanel As New Panel()
+        dynamicPanel.Location = New System.Drawing.Point(26, 12)
+        dynamicPanel.Name = "Panel1"
+        dynamicPanel.Size = New System.Drawing.Size(228, 200)
+        dynamicPanel.BackColor = Color.LightCyan
+
+        Dim textBox1 As New TextBox()
+        textBox1.Location = New Point(10, 10)
+        textBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend
+        textBox1.AutoCompleteSource = AutoCompleteSource.AllUrl
+        textBox1.Size = New Size(200, 30)
+        Dim checkBox1 As New CheckBox()
+        checkBox1.Location = New Point(10, 50)
+        checkBox1.Text = "Check Me"
+        checkBox1.Size = New Size(200, 30)
+
+        dynamicPanel.Controls.Add(textBox1)
+        dynamicPanel.Controls.Add(checkBox1)
+
+        Controls.Add(dynamicPanel)
+
+
+
+
+
+
+end sub
+
+
+ We can also create AutoCompleteStringCollection programmatically. The following code creates an AutoCompleteStringCollection, adds strings to the collection, and sets it to the AutoCompleteCustomSource of the ComboBox. 
+
+' Create a string collection
+
+        Dim authors As New AutoCompleteStringCollection
+
+        authors.Add(" Mike Gold")
+
+        authors.Add(" Praveen Kumar")
+
+        authors.Add(" Mahesh Chand")
+
+        authors.Add(" Michelle Ronald")
+
+        authors.Add(" Mayor Rogers")
+
+        authors.Add(" Raj Beniwal")
+
+        authors.Add(" Dinesh Beniwal")
+
+        authors.Add(" Neel Beniwal")
+
+        authors.Add(" Nipun Tomar")
+
+ 
+
+        ' Set ComboBox AutoComplete properties
+
+        ComboBox1.AutoCompleteMode = AutoCompleteMode.Suggest
+
+        ComboBox1.AutoCompleteSource = AutoCompleteSource.CustomSource
+
+        ComboBox1.AutoCompleteCustomSource = authors
+
+
+this.cb.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+this.cb.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems; 
+
+
+
+ Working with ComboBoxes 
+Drag a ComboBox and a TextBox control onto the form. To display the selection made in the ComboBox in the Textbox the code looks like this:
+
+    Private Sub ComboBox1_SelectedIndexChanged(ByVal sender As System.Object, ByVal e AsSystem.EventArgs) Handles ComboBox1.SelectedIndexChanged
+
+        TextBox1.Text = ComboBox1.SelectedItem
+        'selecting the item from the ComboBox with selected item property
+    End Sub
+
+
+
+ The following code snippet defines and implements these events and their respective event handlers.
+
+ 
+
+AddHandler ComboBox1.SelectedIndexChanged, AddressOf ComboBox1SelectedIndexChanged
+
+ 
+
+Private Sub ComboBox1SelectedIndexChanged(ByVal sender As System.Object, _
+
+        ByVal e As System.EventArgs) Handles ComboBox3.SelectedIndexChanged
+
+        MessageBox.Show(ComboBox1.Text)
+
+End Sub 
+
+
+ Now double click on the form and add the below code.
+
+Private Sub Window_Loaded(ByVal sender As System.Object, ByVal e AsSystem.Windows.RoutedEventArgs) Handles MyBase.Loaded
+
+        For i As Integer = 1950 To DateTime.Now.Year
+
+            ComboBox1.Items.Add(i.ToString())
+
+        Next
+
+    End Sub
+
+ Private Sub ActClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ActClose.Click
+        ' ----- Close the form.
+        DetailEditor.Close()
+        DetailEditor = Nothing
+        Me.Close()
+    End Sub
+
+
+  Private Sub ActEdit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ActEdit.Click
+        ' ----- Let the user edit a record.
+        Dim newID As Integer
+        Dim listItem As Library.ListItemData
+
+        ' ----- Retrieve the item to edit.
+        If (RecordsList.SelectedIndex = -1) Then Return
+        listItem = CType(RecordsList.SelectedItem, Library.ListItemData)
+
+        ' ----- Prompt the user.
+        newID = DetailEditor.EditRecord(listItem.ItemData)
+        If (newID = -1) Then Return
+
+        ' ----- Modify the text of this item.
+        listItem.ItemText = DetailEditor.FormatRecordName(newID)
+        RecordsList.Items(RecordsList.SelectedIndex) = listItem
+        RefreshItemCount(False)
+    End Sub
+
+
+  Private Sub MainForm_Load(ByVal sender As Object, _
+            ByVal e As System.EventArgs) Handles MyBase.Load
+        ' ----- Prepare the form.
+
+        ' ----- Adjust the various panel positions.
+        PanelLibraryItem.Location = New Point( _
+            TaskListBackground.Width, WelcomeBackground.Height)
+        PanelPatronRecord.Location = PanelLibraryItem.Location
+        PanelHelp.Location = PanelLibraryItem.Location
+        PanelCheckOut.Location = PanelLibraryItem.Location
+        PanelCheckIn.Location = PanelLibraryItem.Location
+        PanelAdmin.Location = PanelLibraryItem.Location
+        PanelProcess.Location = PanelLibraryItem.Location
+        PanelReports.Location = PanelLibraryItem.Location
+        PanelLibraryItem.Visible = True
+        ActSearchLimits.PerformClick()
+    End Sub
+    Private Sub AllPanelsInvisible()
+        ' ----- Hide all work panels.
+        PanelLibraryItem.Visible = False
+        PanelPatronRecord.Visible = False
+        PanelHelp.Visible = False
+        PanelCheckOut.Visible = False
+        PanelCheckIn.Visible = False
+        PanelAdmin.Visible = False
+        PanelProcess.Visible = False
+        PanelReports.Visible = False
+
+        ' ----- Correctly color all action labels.
+        ActLibraryItem.BackColor = Color.White
+        ActPatronRecord.BackColor = Color.White
+        ActHelp.BackColor = Color.White
+        ActCheckOut.BackColor = Color.White
+        ActCheckIn.BackColor = Color.White
+        ActAdmin.BackColor = Color.White
+        ActProcess.BackColor = Color.White
+        ActReports.BackColor = Color.White
+    End Sub
+
+    MessageBox.Show("Dynamic Button is clicked.")
+    End Sub
+
+    Sub CreateDynamicButton()
+        ' Create a Button object 
+        Dim dynamicButton As New Button
+        ' Set Button properties
+        dynamicButton.Location = New Point(20, 150)
+        dynamicButton.Height = 30
+        dynamicButton.Width = 200
+        ' Set background and foreground
+        dynamicButton.BackColor = Color.Red
+        dynamicButton.ForeColor = Color.Blue
+        dynamicButton.Text = "I am Dynamic Button"
+        dynamicButton.TextAlign = ContentAlignment.BottomCenter
+        dynamicButton.Name = "DynamicButton"
+        dynamicButton.Font = New Font("Georgia", 12)
+        AddHandler dynamicButton.Click, AddressOf DynamicButton_Click
+        ' Add Button to the Form. Placement of the Button
+        ' will be based on the Location and Size of button
+        Controls.Add(dynamicButton)
+    End Sub
+
+    Private Sub DynamicButton_Click(ByVal sender As Object, ByVal e As System.EventArgs)
+        MessageBox.Show("Dynamic Button is clicked.")
+    End Sub
+
